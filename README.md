@@ -1,2 +1,2 @@
-# Sharding IPFS by TNT
+# Sharding IPFS by Tarantool
 
