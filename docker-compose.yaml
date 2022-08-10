@@ -1,0 +1,123 @@
+version: '2.1'
+
+services:
+  tnt-ipfs1:
+    image: tnt_ipfs
+    container_name: tnt-ipfs1
+    environment:
+      - IPFS_PATH=/data-ipfs
+      - CARTRIDGE_DATA_DIR=/data
+      - TARANTOOL_INSTANCE_NAME=r1-router
+      - TARANTOOL_ADVERTISE_URI=172.19.1.1:3301
+      - TARANTOOL_CLUSTER_COOKIE=secret
+      - TARANTOOL_HTTP_PORT=8001
+    ports:
+      - 4001:4001 # IPFS p2p
+      - 5001:5001 # IPFS API
+      - 8081:8081 # IPFS Gateway
+      - 3301:3301 # TNT Iproto
+      - 8001:8001 # TNT HTTP
+    volumes:
+      - ../data/tnt-ipfs1:/data
+      - ../data/tnt-ipfs1-ipfs:/data-ipfs
+    networks: # Нужно чтобы tnt не ругался при старте на смену IP
+      main:
+        ipv4_address: 172.19.1.1
+
+  tnt-ipfs2:
+    image: tnt_ipfs
+    container_name: tnt-ipfs2
+    environment:
+      - IPFS_PATH=/data-ipfs
+      - CARTRIDGE_DATA_DIR=/data
+      - TARANTOOL_INSTANCE_NAME=s1-master
+      - TARANTOOL_ADVERTISE_URI=172.19.1.2:3301
+      - TARANTOOL_CLUSTER_COOKIE=secret
+      - TARANTOOL_HTTP_PORT=8001
+    ports:
+      - 4002:4001 # IPFS p2p
+      - 5002:5001 # IPFS API
+      - 8082:8081 # IPFS Gateway
+      - 3302:3301 # TNT Iproto
+      - 8002:8001 # TNT HTTP
+    volumes:
+      - ../data/tnt-ipfs2:/data
+      - ../data/tnt-ipfs2-ipfs:/data-ipfs
+    networks: # Нужно чтобы tnt не ругался при старте на смену IP
+      main:
+        ipv4_address: 172.19.1.2
+
+  tnt-ipfs3:
+    image: tnt_ipfs
+    container_name: tnt-ipfs3
+    environment:
+      - IPFS_PATH=/data-ipfs
+      - CARTRIDGE_DATA_DIR=/data
+      - TARANTOOL_INSTANCE_NAME=s1-replica
+      - TARANTOOL_ADVERTISE_URI=172.19.1.3:3301
+      - TARANTOOL_CLUSTER_COOKIE=secret
+      - TARANTOOL_HTTP_PORT=8001
+    ports:
+      - 4003:4001 # IPFS p2p
+      - 5003:5001 # IPFS API
+      - 8083:8081 # IPFS Gateway
+      - 3303:3301 # TNT Iproto
+      - 8003:8001 # TNT HTTP
+    volumes:
+      - ../data/tnt-ipfs3:/data
+      - ../data/tnt-ipfs3-ipfs:/data-ipfs
+    networks: # Нужно чтобы tnt не ругался при старте на смену IP
+      main:
+        ipv4_address: 172.19.1.3
+
+  tnt-ipfs4:
+    image: tnt_ipfs
+    container_name: tnt-ipfs4
+    environment:
+      - IPFS_PATH=/data-ipfs
+      - CARTRIDGE_DATA_DIR=/data
+      - TARANTOOL_INSTANCE_NAME=s2-master
+      - TARANTOOL_ADVERTISE_URI=172.19.1.4:3301
+      - TARANTOOL_CLUSTER_COOKIE=secret
+      - TARANTOOL_HTTP_PORT=8001
+    ports:
+      - 4004:4001 # IPFS p2p
+      - 5004:5001 # IPFS API
+      - 8084:8081 # IPFS Gateway
+      - 3304:3301 # TNT Iproto
+      - 8004:8001 # TNT HTTP
+    volumes:
+      - ../data/tnt-ipfs4:/data
+      - ../data/tnt-ipfs4-ipfs:/data-ipfs
+    networks: # Нужно чтобы tnt не ругался при старте на смену IP
+      main:
+        ipv4_address: 172.19.1.4
+
+  tnt-ipfs5:
+    image: tnt_ipfs
+    container_name: tnt-ipfs5
+    environment:
+      - IPFS_PATH=/data-ipfs
+      - CARTRIDGE_DATA_DIR=/data
+      - TARANTOOL_INSTANCE_NAME=s2-replica
+      - TARANTOOL_ADVERTISE_URI=172.19.1.5:3301
+      - TARANTOOL_CLUSTER_COOKIE=secret
+      - TARANTOOL_HTTP_PORT=8001
+    ports:
+      - 4005:4001 # IPFS p2p
+      - 5005:5001 # IPFS API
+      - 8085:8081 # IPFS Gateway
+      - 3305:3301 # TNT Iproto
+      - 8005:8001 # TNT HTTP
+    volumes:
+      - ../data/tnt-ipfs5:/data
+      - ../data/tnt-ipfs5-ipfs:/data-ipfs
+    networks: # Нужно чтобы tnt не ругался при старте на смену IP
+      main:
+        ipv4_address: 172.19.1.5
+
+networks:
+  main:
+    ipam:
+      config:
+        - subnet: 172.19.1.0/16

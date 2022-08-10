@@ -1,0 +1,20 @@
+---
+tnt_ipfs.r1-router:
+  advertise_uri: localhost:3301
+  http_port: 8081
+
+tnt_ipfs.s1-master:
+  advertise_uri: localhost:3302
+  http_port: 8082
+
+tnt_ipfs.s1-replica:
+  advertise_uri: localhost:3303
+  http_port: 8083
+
+tnt_ipfs.s2-master:
+  advertise_uri: localhost:3304
+  http_port: 8084
+
+tnt_ipfs.s2-replica:
+  advertise_uri: localhost:3305
+  http_port: 8085
